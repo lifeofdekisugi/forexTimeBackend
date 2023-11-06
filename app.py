@@ -57,7 +57,17 @@ def view_user():
         'All Users' : output
         })
 
-
+@app.route('/delete-user', methods=['GET'])
+def delete_user():
+    id = request.args.get('id')
+        
+    delete_user = User.query.filter_by(id=id).first()
+    db.session.delete(delete_user)
+    db.session.commit()
+        
+    return jsonify({
+        'response' : 'success'
+        })
 
 
 if __name__ == "__main__":
