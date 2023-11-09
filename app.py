@@ -38,6 +38,27 @@ def sign_up():
         return jsonify({'response ' : 'success'})
     except Exception:
         return jsonify({"response " : "error"}) 
+    
+@app.route('/login', methods=['POST'])    
+def login():
+    
+    loginData = request.form
+                    
+    name = loginData['name']
+    balance = loginData['balance']
+    
+    user = User.query.filter_by(dbname=name, dbbalance=balance).first()
+    
+    userID = user.id
+    userName = user.dbname
+    userBalance = user.dbbalance
+    
+    return jsonify({
+        'response' : 'success',
+        'id' : userID,
+        'name' : userName,
+        'balance' : userBalance
+    })
 
 @app.route('/view-user', methods=['GET'])
 def view_user():
@@ -68,6 +89,7 @@ def delete_user():
     return jsonify({
         'response' : 'success'
         })
+
 
 
 if __name__ == "__main__":
